@@ -4,8 +4,7 @@ IT-Projektarbeit von Kilian Simonis und Markus Böhls.
 
 Eine Wohnung wird über einen **ESP32-Mikrocontroller** automatisiert: Lichter,
 ein Rollo (Servo), ein Temperatursensor (DHT11) und ein Bewegungsmelder (PIR)
-werden per **MQTT** gesteuert. Eine grafische Desktop-Oberfläche
-(Python/Tkinter) zeigt den Grundriss und erlaubt die Bedienung per Mausklick.
+werden per **MQTT** gesteuert.
 
 ---
 
@@ -14,14 +13,18 @@ werden per **MQTT** gesteuert. Eine grafische Desktop-Oberfläche
 ```
 ┌─────────────┐   WLAN / MQTT   ┌──────────────────┐   MQTT   ┌──────────────┐
 │   ESP32     │◄───────────────►│ Mosquitto Broker │◄────────►│ Dashboard.py │
-│ (WLAN-Modul)│                 │  (lokaler PC)    │          │  (Tkinter)   │
-└─────────────┘                 └──────────────────┘          └──────────────┘
+│ (WLAN-Modul)│                 │  (lokaler PC)    │    │     │  (Tkinter)   │
+└─────────────┘                 └──────────────────┘    │     └──────────────┘
+                                                         │     ┌──────────────┐
+                                                         └────►│ Gesture-     │
+                                                               │ Control.py   │
+                                                               └──────────────┘
 ```
 
 Der ESP32 verbindet sich direkt per WLAN mit dem MQTT-Broker — es ist keine
-zusätzliche Bridge oder ein Kabel zum PC nötig. Das Dashboard ist ein
-gewöhnlicher MQTT-Client und kann auch auf einem anderen Gerät im selben
-Netzwerk laufen.
+zusätzliche Bridge oder ein Kabel zum PC nötig. Dashboard und Gestensteuerung
+sind gewöhnliche MQTT-Clients und können auch auf einem anderen Gerät im
+selben Netzwerk laufen.
 
 ---
 
@@ -32,10 +35,6 @@ Netzwerk laufen.
 | [`ESP32/esp32_mqtt/esp32_mqtt.ino`](ESP32/esp32_mqtt/esp32_mqtt.ino) | Arduino-Sketch für den ESP32 (WLAN + MQTT) |
 | [`ESP32/schaltplan.svg`](ESP32/schaltplan.svg) | Schaltplan der Verkabelung |
 | [`mosquitto/mosquitto.conf`](mosquitto/mosquitto.conf) | Konfiguration für den lokalen MQTT-Broker |
-| [`Dashboard/dashboard.py`](Dashboard/dashboard.py) | Steuer-Dashboard (Tkinter, Grundriss-Ansicht) |
-| [`Dashboard/dashboard_v2.py`](Dashboard/dashboard_v2.py) | Dashboard mit optischem Upgrade (Uhr, Wetter, Lampen-Icons) |
-| [`GESTURE_CONTEXT.md`](GESTURE_CONTEXT.md) | Referenz für ein optionales Gestensteuerungs-Skript |
-| `Dokumentation Kilian Simonis/` | Projektheft, Lerntagebuch, Präsentation |
 | `requirements.txt` | Python-Abhängigkeiten |
 
 ---
@@ -86,13 +85,6 @@ pip install -r requirements.txt
 3. In [`esp32_mqtt.ino`](ESP32/esp32_mqtt/esp32_mqtt.ino) WLAN-Zugangsdaten und Broker-IP eintragen
 4. Board auf `ESP32 Dev Module` stellen, Sketch hochladen
 
-### 5. Dashboard starten
-
-```powershell
-cd Dashboard
-python dashboard_v2.py
-```
-
 ---
 
 ## MQTT-Topic-Schema
@@ -101,5 +93,3 @@ python dashboard_v2.py
 wohnung/<raum>/<gerät>/cmd      ← Befehl senden
 wohnung/<raum>/<gerät>/state    ← Zustand lesen
 ```
-
-Details und Beispiele siehe [`GESTURE_CONTEXT.md`](GESTURE_CONTEXT.md).
