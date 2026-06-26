@@ -35,14 +35,14 @@ selben Netzwerk laufen.
 | [`ESP32/esp32_mqtt/esp32_mqtt.ino`](ESP32/esp32_mqtt/esp32_mqtt.ino) | Arduino-Sketch für den ESP32 (WLAN + MQTT) |
 | [`ESP32/schaltplan.svg`](ESP32/schaltplan.svg) | Schaltplan der Verkabelung |
 | [`mosquitto/mosquitto.conf`](mosquitto/mosquitto.conf) | Konfiguration für den lokalen MQTT-Broker |
-| `requirements.txt` | Python-Abhängigkeiten |
+| [`requirements.txt`](requirements.txt) | Python-Abhängigkeiten |
 
 ---
 
 ## Hardware
 
 - ESP32-WROOM-32 Entwicklungsboard
-- 6× LED + Vorwiderstand (Lichter)
+- 7× LED + 330 Ω Vorwiderstand (Lichter)
 - 1× Servo SG90 (Rollo)
 - 1× DHT11 (Temperatursensor)
 - 1× HC-SR501 (PIR-Bewegungsmelder)
