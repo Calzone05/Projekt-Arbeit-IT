@@ -35,6 +35,9 @@ selben Netzwerk laufen.
 | [`ESP32/esp32_mqtt/esp32_mqtt.ino`](ESP32/esp32_mqtt/esp32_mqtt.ino) | Arduino-Sketch für den ESP32 (WLAN + MQTT) |
 | [`ESP32/schaltplan.svg`](ESP32/schaltplan.svg) | Schaltplan der Verkabelung |
 | [`mosquitto/mosquitto.conf`](mosquitto/mosquitto.conf) | Konfiguration für den lokalen MQTT-Broker |
+| [`Dashboard/dashboard_v2.py`](Dashboard/dashboard_v2.py) | Steuer-Dashboard (Tkinter, Grundriss-Ansicht) |
+| [`Gestik Steuerung/Gestik Steuerung.py`](Gestik%20Steuerung/Gestik%20Steuerung.py) | Gestensteuerung (MediaPipe + MQTT) |
+| [`requirements.txt`](requirements.txt) | Python-Abhängigkeiten |
 
 ---
 
@@ -65,18 +68,38 @@ Details siehe [Schaltplan](ESP32/schaltplan.svg).
 | ESP32 Board-Treiber (CP210x) | https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers |
 | ESP32 Board-Treiber (CH340) | https://www.wch.cn/downloads/CH341SER_EXE.html |
 
-### 2. Mosquitto-Broker starten
+### 2. Python-Abhängigkeiten installieren
+
+```powershell
+pip install -r requirements.txt
+```
+
+### 3. Mosquitto-Broker starten
 
 ```powershell
 & "C:\Program Files\mosquitto\mosquitto.exe" -c "mosquitto\mosquitto.conf" -v
 ```
 
-### 3. ESP32 flashen
+### 4. ESP32 flashen
 
 1. Arduino IDE öffnen → `Werkzeuge → Board → Boardverwalter` → `esp32` von Espressif installieren
 2. Bibliotheken installieren: `PubSubClient`, `DHT sensor library` (Adafruit), `ESP32Servo`
 3. In [`esp32_mqtt.ino`](ESP32/esp32_mqtt/esp32_mqtt.ino) WLAN-Zugangsdaten und Broker-IP eintragen
 4. Board auf `ESP32 Dev Module` stellen, Sketch hochladen
+
+### 5. Dashboard starten
+
+```powershell
+cd Dashboard
+python dashboard_v2.py
+```
+
+### 6. Gestensteuerung starten (optional)
+
+```powershell
+cd "Gestik Steuerung"
+python "Gestik Steuerung.py"
+```
 
 ---
 
